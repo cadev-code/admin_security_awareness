@@ -6,3 +6,61 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id           Int    @id @default(autoincrement())
+  username     String @unique
+  passwordHash String
+}
+
+model Module {
+  id        Int        @id @default(autoincrement())
+  title     String     @unique
+  type      ModuleType @default(VIDEO)
+  url       String     @unique
+  createdAt DateTime   @default(now())
+  bgColor   String
+  bgImage   String
+  logo      String
+  audios    Audio[]
+  videos    Video[]
+  images    Image[]
+}
+
+enum ModuleType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+model Audio {
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  filename     String   @unique
+  availability DateTime
+  examUrl      String   @unique
+  idModule     Int
+  module       Module   @relation(fields: [idModule], references: [id])
+}
+
+model Video {
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  filename     String   @unique
+  cover        String   @unique
+  availability DateTime
+  examUrl      String   @unique
+  idModule     Int
+  module       Module   @relation(fields: [idModule], references: [id])
+}
+
+model Image {
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  filename     String   @unique
+  cover        String   @unique
+  availability DateTime
+  examUrl      String   @unique
+  idModule     Int
+  module       Module   @relation(fields: [idModule], references: [id])
+}
