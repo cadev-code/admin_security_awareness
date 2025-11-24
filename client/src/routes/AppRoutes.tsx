@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { Approved, Login } from '@/Pages';
+import { Approved, Login } from '@/pages';
 
 export const AppRoutes = () => {
   return (
