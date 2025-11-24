@@ -19,6 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useLogin } from '@/hooks';
 
 export const Login = () => {
   const formSchema = z.object({
@@ -28,8 +29,9 @@ export const Login = () => {
     password: z
       .string()
       .regex(REGEX.PASSWORD, 'Contraseña inválida o incorrecta.'),
-    rememberMe: z.boolean(),
   });
+
+  const login = useLogin();
 
   const form = useForm({
     defaultValues: {
@@ -40,7 +42,7 @@ export const Login = () => {
       onSubmit: formSchema,
     },
     onSubmit: (values) => {
-      console.log('login success', values.value);
+      login.mutate(values.value);
     },
   });
 
