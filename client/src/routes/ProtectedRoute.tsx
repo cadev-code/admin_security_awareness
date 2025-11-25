@@ -1,3 +1,4 @@
+import { Layout } from '@/components';
 import { useCurrentUser } from '@/hooks';
 import { Loader2 } from 'lucide-react';
 import { Navigate, Outlet } from 'react-router';
@@ -18,8 +19,8 @@ export const ProtectedRoute = () => {
   }
 
   return (
-    <div>
+    <Layout>
       <Outlet />
-    </div>
+    </Layout>
   );
 };
