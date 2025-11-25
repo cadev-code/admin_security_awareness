@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { Approved, Login } from '@/pages';
+import { Management, Login } from '@/pages';
 import { PublicRoute } from './PublicRoute';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -15,7 +15,7 @@ export const AppRoutes = () => {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="management" element={<Approved />} />
+        <Route path="management" element={<Management />} />
 
         <Route index element={<Navigate to="/management" replace />} />
 

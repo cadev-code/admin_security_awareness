@@ -1,2 +1,2 @@
-export * from './Approved/Approved';
+export * from './Management/Management';
 export * from './Login/Login';
