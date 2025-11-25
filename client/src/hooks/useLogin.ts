@@ -20,7 +20,7 @@ export const useLogin = () => {
       showAlert(error.response?.data.message, 'error');
     },
     onSuccess: () => {
-      navigate('/approved');
+      navigate('/management');
     },
   });
 };

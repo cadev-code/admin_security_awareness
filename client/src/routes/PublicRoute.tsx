@@ -14,7 +14,7 @@ export const PublicRoute = () => {
   }
 
   if (!isError || user) {
-    return <Navigate to="/approved" replace />;
+    return <Navigate to="/management" replace />;
   }
 
   return <Outlet />;

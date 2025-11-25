@@ -15,11 +15,11 @@ export const AppRoutes = () => {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="approved" element={<Approved />} />
+        <Route path="management" element={<Approved />} />
 
-        <Route index element={<Navigate to="/approved" replace />} />
+        <Route index element={<Navigate to="/management" replace />} />
 
-        <Route path="*" element={<Navigate to="/approved" replace />} />
+        <Route path="*" element={<Navigate to="/management" replace />} />
       </Route>
     </Routes>
   );
