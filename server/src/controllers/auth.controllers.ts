@@ -56,7 +56,7 @@ export const login = async (
       .cookie('access_token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 60, // 1 hora
+        maxAge: 1000 * 60 * 60, // 1 hora
       })
       .json({
         id: user.id,
