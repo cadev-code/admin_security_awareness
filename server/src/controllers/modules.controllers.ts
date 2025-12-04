@@ -3,6 +3,7 @@ import { ModuleBody } from '../schemas';
 import prisma from '../prisma_client';
 import fs from 'fs';
 import { AppError } from '../utils';
+import { logger } from '../helpers';
 
 const removeUploadedFiles = (
   files: { fieldname: string; filename: string; path: string }[],
@@ -72,7 +73,7 @@ export const createModule = async (
       );
     }
 
-    await prisma.module.create({
+    const newModule = await prisma.module.create({
       data: {
         title,
         type,
@@ -82,6 +83,10 @@ export const createModule = async (
         logo,
       },
     });
+
+    logger.info(
+      `Módulo creado exitosamente: ID ${newModule.id} - Título: ${newModule.title} (Creado por: ${req.user?.username || 'Unknown'})`,
+    );
 
     res
       .status(201)
