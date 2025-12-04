@@ -1,6 +1,6 @@
 import { poster } from '@/api/queryHelpers';
 import { useAlertStore } from '@/store';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 type CreateModulePayload = {
@@ -13,6 +13,7 @@ type CreateModulePayload = {
 };
 
 export const useCreateModule = (closeForm: () => void) => {
+  const queryClient = useQueryClient();
   const { showAlert } = useAlertStore();
 
   return useMutation({
@@ -34,7 +35,7 @@ export const useCreateModule = (closeForm: () => void) => {
       return poster('/modules', formData);
     },
     onSuccess: () => {
-      // TODO: agregar invalidateQueries de módulos
+      queryClient.invalidateQueries({ queryKey: ['modules'] });
       showAlert('Modulo creado con éxito', 'success');
       closeForm();
     },
