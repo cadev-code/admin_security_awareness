@@ -3,9 +3,6 @@ import axios from 'axios';
 export const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080',
   withCredentials: true, // Incluir cookies en las solicitudes
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Interceptor de request para cambiar timeout dinámicamente
