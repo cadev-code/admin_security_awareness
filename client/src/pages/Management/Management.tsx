@@ -31,7 +31,7 @@ export const Management = () => {
 
       <div className="px-6 py-8 space-y-6">
         {showAddModule ? (
-          <AddModule setShowAddModule={setShowAddModule} />
+          <AddModule closeForm={() => setShowAddModule(false)} />
         ) : (
           <Card className="rounded-md">
             <CardHeader>

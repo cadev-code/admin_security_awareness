@@ -22,17 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useCreateModule } from '@/hooks';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod';
 
-export const AddModule = ({
-  setShowAddModule,
-}: {
-  setShowAddModule: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+export const AddModule = ({ closeForm }: { closeForm: () => void }) => {
   const formSchema = z.object({
     title: z.string().min(2, 'El título es obligatorio'),
-    type: z.enum(['AUDIO', 'VIDEO', 'IMAGE']),
+    type: z.string(),
     url: z
       .string()
       .min(2, 'Deben ser 2 o más caracteres')
@@ -63,6 +60,8 @@ export const AddModule = ({
       .nullable(),
   });
 
+  const createModule = useCreateModule(closeForm);
+
   const form = useForm({
     defaultValues: {
       title: '',
@@ -74,6 +73,9 @@ export const AddModule = ({
     },
     validators: {
       onSubmit: formSchema,
+    },
+    onSubmit: (values) => {
+      createModule.mutate(values.value);
     },
   });
 
@@ -271,7 +273,7 @@ export const AddModule = ({
             variant="secondary"
             form="add-module"
             className="w-1/2 cursor-pointer"
-            onClick={() => setShowAddModule(false)}
+            onClick={closeForm}
           >
             Cancelar
           </Button>
