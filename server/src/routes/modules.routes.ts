@@ -4,7 +4,7 @@ import {
   uploadMiddleware,
   validateInput,
 } from '../middlewares';
-import { createModule } from '../controllers';
+import { createModule, getModules } from '../controllers';
 import { moduleSchema } from '../schemas';
 
 const router = Router();
@@ -22,5 +22,7 @@ router.post(
   validateInput(moduleSchema),
   createModule,
 );
+
+router.get('/modules', authMiddleware, getModules);
 
 export default router;

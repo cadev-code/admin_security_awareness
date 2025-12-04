@@ -95,3 +95,19 @@ export const createModule = async (
     next(error);
   }
 };
+
+export const getModules = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const modules = await prisma.module.findMany({
+      orderBy: { createdAt: 'asc' },
+    });
+
+    res.status(200).json({ error: null, data: modules });
+  } catch (error) {
+    next(error);
+  }
+};
