@@ -3,19 +3,7 @@ import { ModuleBody } from '../schemas';
 import prisma from '../prisma_client';
 import fs from 'fs';
 import { AppError } from '../utils';
-import { logger } from '../helpers';
-
-const removeUploadedFiles = (
-  files: { fieldname: string; filename: string; path: string }[],
-) => {
-  if (files && files.length > 0) {
-    files.forEach((file) => {
-      fs.unlink(file.path, (err) => {
-        if (err) throw err;
-      });
-    });
-  }
-};
+import { logger, removeUploadedFiles } from '../helpers';
 
 export const createModule = async (
   req: Request<object, object, ModuleBody>,
