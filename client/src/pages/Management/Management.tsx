@@ -7,16 +7,23 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { GripVertical, LayoutTemplate, Plus } from 'lucide-react';
-import { AddModule } from './components';
+import { AddModule, Module } from './components';
 import { useState } from 'react';
 import { useModules } from '@/hooks';
+import { type Module as ModuleType } from '@/types';
 
 export const Management = () => {
   const [showAddModule, setShowAddModule] = useState(false);
 
   const { data, isPending } = useModules();
 
-  console.log(data);
+  const [showModule, setShowModule] = useState<{
+    show: boolean;
+    module: ModuleType | null;
+  }>({
+    show: false,
+    module: null,
+  });
 
   return (
     <div className="min-h-screen w-full">
@@ -35,9 +42,7 @@ export const Management = () => {
       </header>
 
       <div className="px-6 py-8 space-y-6">
-        {showAddModule ? (
-          <AddModule closeForm={() => setShowAddModule(false)} />
-        ) : (
+        {!showAddModule && !showModule.show && (
           <Card className="rounded-md">
             <CardHeader>
               <CardTitle>Módulos</CardTitle>
@@ -67,6 +72,12 @@ export const Management = () => {
                         <Button
                           size="sm"
                           className="cursor-pointer bg-gray-600 hover:bg-gray-500"
+                          onClick={() =>
+                            setShowModule({
+                              show: true,
+                              module,
+                            })
+                          }
                         >
                           Gestionar Contenido
                         </Button>
@@ -83,6 +94,15 @@ export const Management = () => {
               </div>
             </CardContent>
           </Card>
+        )}
+        {showAddModule && (
+          <AddModule closeForm={() => setShowAddModule(false)} />
+        )}
+        {showModule.show && showModule.module && (
+          <Module
+            module={showModule.module}
+            closeModule={() => setShowModule({ show: false, module: null })}
+          />
         )}
       </div>
     </div>
