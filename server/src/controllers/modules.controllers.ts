@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ModuleBody } from '../schemas';
 import prisma from '../prisma_client';
-import fs from 'fs';
 import { AppError } from '../utils';
 import { logger, removeUploadedFiles } from '../helpers';
 
@@ -45,13 +44,7 @@ export const createModule = async (
     });
 
     if (existingUrl) {
-      if (files && files.length > 0) {
-        files.forEach((file) => {
-          fs.unlink(file.path, (err) => {
-            if (err) throw err;
-          });
-        });
-      }
+      removeUploadedFiles(files);
 
       throw new AppError(
         `Ya existe un modulo con el título ${title}`,
