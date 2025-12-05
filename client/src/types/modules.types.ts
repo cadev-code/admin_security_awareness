@@ -1,4 +1,4 @@
-interface Module {
+export interface Module {
   id: number;
   title: string;
   type: string;
