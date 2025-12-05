@@ -23,34 +23,38 @@ const storage = multer.diskStorage({
   },
 });
 
-// Función genérica para crear filtros de tipos de archivo
+// allowedMimeTypes por fieldname
+type PerFieldMimeTypes = Record<string, string[]>;
+
 const createFileFilter =
-  (allowedMimeTypes: string[]): multer.Options['fileFilter'] =>
+  (allowedMimeTypesByField: PerFieldMimeTypes): multer.Options['fileFilter'] =>
   (_req, file, cb) => {
-    if (allowedMimeTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(
-        new AppError(
-          `Solo se permiten archivos en formato ${JSON.stringify(allowedMimeTypes)}`,
-          400,
-          'FILE_FORMAT_INVALID',
-          `Formato de archivo no permitido: ${file.mimetype}`,
-        ),
-      );
+    const allowedForField = allowedMimeTypesByField[file.fieldname];
+
+    if (allowedForField.includes(file.mimetype)) {
+      return cb(null, true);
     }
+
+    cb(
+      new AppError(
+        `Solo se permiten archivos en formato ${JSON.stringify(allowedForField)} para el campo "${file.fieldname}"`,
+        400,
+        'FILE_FORMAT_INVALID',
+        `Formato de archivo no permitido: ${file.mimetype} en campo ${file.fieldname} - Intentado por '${_req.user?.username}'`,
+      ),
+    );
   };
 
 // Factory genérica de upload
 export const uploadMiddleware = (options: {
   fields?: multer.Field[];
-  allowedMimeTypes: string[];
+  allowedMimeTypesByField: PerFieldMimeTypes;
 }) => {
-  const { fields, allowedMimeTypes } = options;
+  const { fields, allowedMimeTypesByField } = options;
 
   const upload = multer({
     storage,
-    fileFilter: createFileFilter(allowedMimeTypes),
+    fileFilter: createFileFilter(allowedMimeTypesByField),
   });
 
   if (fields) {

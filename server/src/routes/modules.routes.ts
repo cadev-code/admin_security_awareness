@@ -17,7 +17,10 @@ router.post(
       { name: 'bgImage', maxCount: 1 },
       { name: 'logo', maxCount: 1 },
     ],
-    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    allowedMimeTypesByField: {
+      bgImage: ['image/jpeg', 'image/png', 'image/webp'],
+      logo: ['image/jpeg', 'image/png', 'image/webp'],
+    },
   }) as RequestHandler,
   validateInput(moduleSchema),
   createModule,
