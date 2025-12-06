@@ -6,13 +6,16 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { useCreateVideo } from '@/hooks';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod';
 
 export const AddContent = ({
+  idModule,
   type,
   closeForm,
 }: {
+  idModule: number;
   type: 'VIDEO' | 'AUDIO' | 'IMAGE';
   closeForm: () => void;
 }) => {
@@ -48,6 +51,8 @@ export const AddContent = ({
 
   const today = new Date();
 
+  const createVideo = useCreateVideo(closeForm);
+
   const form = useForm({
     defaultValues: {
       title: '',
@@ -60,7 +65,7 @@ export const AddContent = ({
       onSubmit: formSchema,
     },
     onSubmit: (values) => {
-      console.log(values.value.availability);
+      createVideo.mutate({ idModule, ...values.value });
     },
   });
 
@@ -133,6 +138,7 @@ export const AddContent = ({
                     type="date"
                     value={field.state.value}
                     accept={allowedFileTypes[type].join(',')}
+                    onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}

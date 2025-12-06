@@ -47,6 +47,7 @@ export const Module = ({
             </div>
             {showAddForm && (
               <AddContent
+                idModule={module.id}
                 type={module.type as 'VIDEO' | 'AUDIO' | 'IMAGE'}
                 closeForm={() => setShowAddForm(false)}
               />
