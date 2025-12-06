@@ -18,3 +18,14 @@ export const videoSchema = z.object({
 });
 
 export type VideoBody = z.infer<typeof videoSchema>;
+
+export const videoQuerySchema = z.object({
+  idModule: z
+    .string({ message: 'idModule es un campo obligatorio' })
+    .transform((val) => Number(val))
+    .refine((num) => Number.isInteger(num) && num > 0, {
+      message: 'idModule debe ser un número entero válido',
+    }),
+});
+
+export type VideoQuery = z.infer<typeof videoQuerySchema>;
