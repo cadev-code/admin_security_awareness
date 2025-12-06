@@ -21,7 +21,7 @@ export const Module = ({
   const [showAddForm, setShowAddForm] = useState(false);
 
   return (
-    <div className="w-full space-y-2">
+    <div className="w-full space-y-4">
       <Button variant="link" onClick={closeModule}>
         <ArrowLeft />
         Regresar
@@ -31,10 +31,10 @@ export const Module = ({
           <CardTitle>{module.title}</CardTitle>
           <CardDescription>Gestionar contenido del módulo</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              {!showAddForm && (
+        {!showAddForm && (
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
                 <Button
                   size="sm"
                   className="cursor-pointer"
@@ -43,18 +43,18 @@ export const Module = ({
                   <Plus />
                   Agregar Contenido
                 </Button>
-              )}
+              </div>
             </div>
-            {showAddForm && (
-              <AddContent
-                idModule={module.id}
-                type={module.type as 'VIDEO' | 'AUDIO' | 'IMAGE'}
-                closeForm={() => setShowAddForm(false)}
-              />
-            )}
-          </div>
-        </CardContent>
+          </CardContent>
+        )}
       </Card>
+      {showAddForm && (
+        <AddContent
+          idModule={module.id}
+          type={module.type as 'VIDEO' | 'AUDIO' | 'IMAGE'}
+          closeForm={() => setShowAddForm(false)}
+        />
+      )}
     </div>
   );
 };
