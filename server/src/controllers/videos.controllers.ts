@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { VideoBody } from '../schemas';
+import { VideoBody, VideoQuery } from '../schemas';
 import { logger, removeUploadedFiles } from '../helpers';
 import { AppError } from '../utils';
 import prisma from '../prisma_client';
@@ -98,6 +98,24 @@ export const createVideo = async (
     );
 
     res.status(201).json({ error: null, message: 'Video creado exitosamente' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getVideosByModule = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { idModule } = req.query as unknown as VideoQuery;
+
+    const videos = await prisma.video.findMany({
+      where: { idModule: Number(idModule) },
+    });
+
+    res.status(200).json({ error: null, data: videos });
   } catch (error) {
     next(error);
   }

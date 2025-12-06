@@ -3,9 +3,10 @@ import {
   authMiddleware,
   uploadMiddleware,
   validateInput,
+  validateQuery,
 } from '../middlewares';
-import { createVideo } from '../controllers';
-import { videoSchema } from '../schemas';
+import { createVideo, getVideosByModule } from '../controllers';
+import { videoQuerySchema, videoSchema } from '../schemas';
 
 const router = Router();
 
@@ -24,6 +25,13 @@ router.post(
   }) as RequestHandler,
   validateInput(videoSchema),
   createVideo,
+);
+
+router.get(
+  '/videos',
+  authMiddleware,
+  validateQuery(videoQuerySchema),
+  getVideosByModule,
 );
 
 export default router;
