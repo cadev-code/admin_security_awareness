@@ -96,172 +96,182 @@ export const AddModule = ({ closeForm }: { closeForm: () => void }) => {
           }}
         >
           <FieldGroup>
-            <form.Field
-              name="title"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Título</FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-            <form.Field
-              name="type"
-              children={(field) => {
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>Tipo de Módulo</FieldLabel>
-                    <Select
-                      name={field.name}
-                      value={field.state.value}
-                      onValueChange={field.handleChange}
-                    >
-                      <SelectTrigger id={field.name}>
-                        <SelectValue placeholder="Selecciona un tipo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="AUDIO">
-                            Audios / Podcast
-                          </SelectItem>
-                          <SelectItem value="VIDEO">Videos</SelectItem>
-                          <SelectItem value="IMAGE">Imágenes</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </Field>
-                );
-              }}
-            />
-            <form.Field
-              name="url"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>URL</FieldLabel>
-                    <div className="relative">
+            <Field className="grid grid-cols-2 gap-4">
+              <form.Field
+                name="title"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Título</FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        onKeyDown={(e) =>
-                          e.code === 'Space' && e.preventDefault()
-                        }
-                        className="pl-38"
                       />
-                      <p className="absolute left-2 top-1/2 -translate-y-1/2 select-none">
-                        http://example.com/
-                      </p>
-                    </div>
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-            <form.Field
-              name="bgColor"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Color de Fondo</FieldLabel>
-                    <div className="relative">
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="type"
+                children={(field) => {
+                  return (
+                    <Field>
+                      <FieldLabel htmlFor={field.name}>
+                        Tipo de Módulo
+                      </FieldLabel>
+                      <Select
+                        name={field.name}
+                        value={field.state.value}
+                        onValueChange={field.handleChange}
+                      >
+                        <SelectTrigger id={field.name}>
+                          <SelectValue placeholder="Selecciona un tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="AUDIO">
+                              Audios / Podcast
+                            </SelectItem>
+                            <SelectItem value="VIDEO">Videos</SelectItem>
+                            <SelectItem value="IMAGE">Imágenes</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  );
+                }}
+              />
+            </Field>
+            <Field className="grid grid-cols-2 gap-4">
+              <form.Field
+                name="url"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>URL</FieldLabel>
+                      <div className="relative">
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          onKeyDown={(e) =>
+                            e.code === 'Space' && e.preventDefault()
+                          }
+                          className="pl-38"
+                        />
+                        <p className="absolute left-2 top-1/2 -translate-y-1/2 select-none">
+                          http://example.com/
+                        </p>
+                      </div>
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="bgColor"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Color de Fondo
+                      </FieldLabel>
+                      <div className="relative">
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          onKeyDown={(e) =>
+                            e.code === 'Space' && e.preventDefault()
+                          }
+                          className="pl-5"
+                        />
+                        <p className="absolute left-2 top-1/2 -translate-y-1/2 select-none">
+                          #
+                        </p>
+                      </div>
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+            </Field>
+            <Field className="grid grid-cols-2 gap-4">
+              <form.Field
+                name="bgImage"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Imagen de Fondo (Opcional)
+                      </FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
-                        value={field.state.value}
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
                         onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        onKeyDown={(e) =>
-                          e.code === 'Space' && e.preventDefault()
+                        onChange={(e) =>
+                          field.handleChange(e.target.files?.[0] ?? null)
                         }
-                        className="pl-5"
                       />
-                      <p className="absolute left-2 top-1/2 -translate-y-1/2 select-none">
-                        #
-                      </p>
-                    </div>
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-            <form.Field
-              name="bgImage"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Imagen de Fondo (Opcional)
-                    </FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(e.target.files?.[0] ?? null)
-                      }
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-            <form.Field
-              name="logo"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Logo de Módulo (Opcional)
-                    </FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(e.target.files?.[0] ?? null)
-                      }
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="logo"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Logo de Módulo (Opcional)
+                      </FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onBlur={field.handleBlur}
+                        onChange={(e) =>
+                          field.handleChange(e.target.files?.[0] ?? null)
+                        }
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+            </Field>
           </FieldGroup>
         </form>
       </CardContent>
@@ -272,16 +282,12 @@ export const AddModule = ({ closeForm }: { closeForm: () => void }) => {
             type="button"
             variant="secondary"
             form="add-module"
-            className="w-1/2 cursor-pointer"
+            className="cursor-pointer"
             onClick={closeForm}
           >
             Cancelar
           </Button>
-          <Button
-            type="submit"
-            form="add-module"
-            className="w-1/2 cursor-pointer"
-          >
+          <Button type="submit" form="add-module" className="cursor-pointer">
             Guardar
           </Button>
         </div>

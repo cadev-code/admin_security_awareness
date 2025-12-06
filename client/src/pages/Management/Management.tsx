@@ -42,14 +42,14 @@ export const Management = () => {
       </header>
 
       <div className="px-6 py-8 space-y-6">
-        {!showAddModule && !showModule.show && (
-          <Card className="rounded-md">
-            <CardHeader>
-              <CardTitle>Módulos</CardTitle>
-              <CardDescription>
-                Gestiona los módulos disponibles en la intranet.
-              </CardDescription>
-            </CardHeader>
+        <Card className="rounded-md">
+          <CardHeader>
+            <CardTitle>Módulos</CardTitle>
+            <CardDescription>
+              Gestiona los módulos disponibles en la intranet.
+            </CardDescription>
+          </CardHeader>
+          {!showAddModule && !showModule.show && (
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -93,8 +93,9 @@ export const Management = () => {
                 </div>
               </div>
             </CardContent>
-          </Card>
-        )}
+          )}
+        </Card>
+
         {showAddModule && (
           <AddModule closeForm={() => setShowAddModule(false)} />
         )}
