@@ -39,7 +39,7 @@ export const AddContent = ({
         /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
         'La fecha debe tener el formato YYYY-MM-DD',
       ),
-    examUrl: z.string().startsWith('http', 'No es una URL válida'),
+    examUrl: z.string(),
     cover: z
       .instanceof(File)
       .refine(
