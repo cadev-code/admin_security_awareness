@@ -1,6 +1,6 @@
 import { poster } from '@/api/queryHelpers';
 import { useAlertStore } from '@/store';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 type CreateVideoPayload = {
@@ -14,6 +14,8 @@ type CreateVideoPayload = {
 
 export const useCreateVideo = (closeForm: () => void) => {
   const { showAlert } = useAlertStore();
+
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (data: CreateVideoPayload) => {
@@ -34,7 +36,7 @@ export const useCreateVideo = (closeForm: () => void) => {
       return poster('/videos', formData);
     },
     onSuccess: () => {
-      // add query invalidation if needed
+      queryClient.invalidateQueries({ queryKey: ['videos'] });
       showAlert('Video creado con éxito', 'success');
       closeForm();
     },
