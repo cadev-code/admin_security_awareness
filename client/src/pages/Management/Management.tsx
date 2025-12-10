@@ -11,19 +11,27 @@ import { AddModule, Module } from './components';
 import { useState } from 'react';
 import { useModules } from '@/hooks';
 import { type Module as ModuleType } from '@/types';
+import { EditModule } from './components/EditModule';
+
+interface ModuleDialogState {
+  show: boolean;
+  module: ModuleType | null;
+}
 
 export const Management = () => {
   const [showAddModule, setShowAddModule] = useState(false);
 
-  const { data, isPending } = useModules();
-
-  const [showModule, setShowModule] = useState<{
-    show: boolean;
-    module: ModuleType | null;
-  }>({
+  const [showEditModule, setShowEditModule] = useState<ModuleDialogState>({
     show: false,
     module: null,
   });
+
+  const [showModule, setShowModule] = useState<ModuleDialogState>({
+    show: false,
+    module: null,
+  });
+
+  const { data, isPending } = useModules();
 
   return (
     <div className="min-h-screen w-full">
@@ -49,7 +57,7 @@ export const Management = () => {
               Gestiona los módulos disponibles en la intranet.
             </CardDescription>
           </CardHeader>
-          {!showAddModule && !showModule.show && (
+          {!showAddModule && !showModule.show && !showEditModule.show && (
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -84,6 +92,12 @@ export const Management = () => {
                         <Button
                           size="sm"
                           className="cursor-pointer bg-gray-600 hover:bg-gray-500"
+                          onClick={() =>
+                            setShowEditModule({
+                              show: true,
+                              module,
+                            })
+                          }
                         >
                           Editar Módulo
                         </Button>
@@ -103,6 +117,12 @@ export const Management = () => {
           <Module
             module={showModule.module}
             closeModule={() => setShowModule({ show: false, module: null })}
+          />
+        )}
+        {showEditModule.show && showEditModule.module && (
+          <EditModule
+            module={showEditModule.module}
+            closeForm={() => setShowEditModule({ show: false, module: null })}
           />
         )}
       </div>
