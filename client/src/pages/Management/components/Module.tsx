@@ -10,7 +10,7 @@ import { AddContent } from './AddContent';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, GripVertical, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { useVideos } from '@/hooks/useVideos';
+import { useModuleContent } from '@/hooks';
 
 export const Module = ({
   module,
@@ -21,7 +21,7 @@ export const Module = ({
 }) => {
   const [showAddForm, setShowAddForm] = useState(false);
 
-  const { data, isPending } = useVideos(String(module.id));
+  const { data, isPending } = useModuleContent(module.type, String(module.id));
 
   return (
     <div className="w-full space-y-4">
