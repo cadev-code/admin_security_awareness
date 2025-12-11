@@ -12,7 +12,6 @@ import {
   Field,
   FieldLabel,
   FieldError,
-  FieldDescription,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Module as ModuleType } from '@/types';
@@ -43,31 +42,15 @@ export const EditModule = ({
         /^(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/,
         'Color inválido en formato HEX.',
       ),
-    bgImage: z
-      .instanceof(File)
-      .refine(
-        (file) => ['image/jpeg', 'image/png', 'image/webp'].includes(file.type),
-        'El archivo debe ser una imagen (jpg, png, webp)',
-      )
-      .nullable(),
-    logo: z
-      .instanceof(File)
-      .refine(
-        (file) => ['image/jpeg', 'image/png', 'image/webp'].includes(file.type),
-        'El archivo debe ser una imagen (jpg, png, webp)',
-      )
-      .nullable(),
   });
 
-  const { title, url, bgColor, bgImage, logo } = module;
+  const { title, url, bgColor } = module;
 
   const form = useForm({
     defaultValues: {
       title,
       url,
       bgColor,
-      bgImage: null as File | null,
-      logo: null as File | null,
     },
     validators: {
       onSubmit: formSchema,
@@ -154,36 +137,6 @@ export const EditModule = ({
             </Field>
             <Field className="grid grid-cols-2 gap-4">
               <form.Field
-                name="bgImage"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        Imagen de Fondo (Opcional)
-                      </FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp"
-                        onBlur={field.handleBlur}
-                        onChange={(e) =>
-                          field.handleChange(e.target.files?.[0] ?? null)
-                        }
-                      />
-                      <FieldDescription>
-                        Archivo actual: {bgImage.split('-')[1]}
-                      </FieldDescription>
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
-                }}
-              />
-              <form.Field
                 name="bgColor"
                 children={(field) => {
                   const isInvalid =
@@ -209,38 +162,6 @@ export const EditModule = ({
                           #
                         </p>
                       </div>
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
-                }}
-              />
-            </Field>
-            <Field className="grid grid-cols-2 gap-4">
-              <form.Field
-                name="logo"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        Logo de Módulo (Opcional)
-                      </FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp"
-                        onBlur={field.handleBlur}
-                        onChange={(e) =>
-                          field.handleChange(e.target.files?.[0] ?? null)
-                        }
-                      />
-                      <FieldDescription>
-                        Archivo actual: {logo.split('-')[1]}
-                      </FieldDescription>
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
