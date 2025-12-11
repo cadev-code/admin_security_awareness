@@ -33,6 +33,14 @@ export const Module = ({
         <CardHeader>
           <CardTitle>{module.title}</CardTitle>
           <CardDescription>Gestionar contenido del módulo</CardDescription>
+          <p className="text-sm font-semibold">
+            Categoría:{' '}
+            {module.type === 'VIDEO'
+              ? 'Videos'
+              : module.type === 'AUDIO'
+                ? 'Audios'
+                : 'Imágenes'}
+          </p>
         </CardHeader>
         {!showAddForm && (
           <CardContent>
