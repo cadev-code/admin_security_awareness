@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ModuleBody } from '../schemas';
+import { ModuleBody, ModuleEditBody } from '../schemas';
 import prisma from '../prisma_client';
 import { AppError } from '../utils';
 import { logger, removeUploadedFiles } from '../helpers';
@@ -88,6 +88,50 @@ export const getModules = async (
     });
 
     res.status(200).json({ error: null, data: modules });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateModule = async (
+  req: Request<{ id: string }, object, ModuleEditBody>,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const moduleId = Number(req.params.id);
+
+    const existingModule = await prisma.module.findUnique({
+      where: { id: moduleId },
+    });
+
+    if (!existingModule) {
+      throw new AppError(
+        `El modulo indicado no existe`,
+        400,
+        'MODULE_NOT_FOUND',
+        `Intento de actualización de módulo fallido - Módulo ID ${moduleId} no encontrado (Intentado por: ${req.user?.username || 'Unknown'})`,
+      );
+    }
+
+    const { title, url, bgColor } = req.body;
+
+    const updateModule = await prisma.module.update({
+      where: { id: moduleId },
+      data: {
+        title,
+        url,
+        bgColor,
+      },
+    });
+
+    logger.info(
+      `Módulo actualizado exitosamente: ID ${updateModule.id} - Título: ${updateModule.title} (Actualizado por: ${req.user?.username || 'Unknown'})`,
+    );
+
+    res
+      .status(200)
+      .json({ error: null, message: 'Módulo actualizado exitosamente' });
   } catch (error) {
     next(error);
   }

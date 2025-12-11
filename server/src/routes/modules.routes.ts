@@ -3,9 +3,14 @@ import {
   authMiddleware,
   uploadMiddleware,
   validateInput,
+  validateParam,
 } from '../middlewares';
-import { createModule, getModules } from '../controllers';
-import { moduleSchema } from '../schemas';
+import { createModule, getModules, updateModule } from '../controllers';
+import {
+  moduleParamSchema,
+  moduleAddSchema,
+  moduleEditSchema,
+} from '../schemas';
 
 const router = Router();
 
@@ -22,10 +27,18 @@ router.post(
       logo: ['image/jpeg', 'image/png', 'image/webp'],
     },
   }) as RequestHandler,
-  validateInput(moduleSchema),
+  validateInput(moduleAddSchema),
   createModule,
 );
 
 router.get('/modules', authMiddleware, getModules);
+
+router.put(
+  '/modules/:id',
+  authMiddleware,
+  validateParam(moduleParamSchema),
+  validateInput(moduleEditSchema),
+  updateModule,
+);
 
 export default router;
