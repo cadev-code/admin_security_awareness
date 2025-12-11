@@ -14,6 +14,7 @@ import {
   FieldError,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { useUpdateModule } from '@/hooks';
 import { Module as ModuleType } from '@/types';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod';
@@ -27,7 +28,6 @@ export const EditModule = ({
 }) => {
   const formSchema = z.object({
     title: z.string().min(2, 'El título es obligatorio'),
-    type: z.string(),
     url: z
       .string()
       .min(2, 'Deben ser 2 o más caracteres')
@@ -44,7 +44,9 @@ export const EditModule = ({
       ),
   });
 
-  const { title, url, bgColor } = module;
+  const { id, title, url, bgColor } = module;
+
+  const updateModule = useUpdateModule(id, closeForm);
 
   const form = useForm({
     defaultValues: {
@@ -56,7 +58,7 @@ export const EditModule = ({
       onSubmit: formSchema,
     },
     onSubmit: (values) => {
-      console.log(values.value);
+      updateModule.mutate(values.value);
     },
   });
 
@@ -73,7 +75,7 @@ export const EditModule = ({
       </CardHeader>
       <CardContent>
         <form
-          id="add-module"
+          id="edit-module"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
@@ -179,13 +181,18 @@ export const EditModule = ({
           <Button
             type="button"
             variant="secondary"
-            form="add-module"
+            form="edit-module"
             className="cursor-pointer"
             onClick={closeForm}
           >
             Cancelar
           </Button>
-          <Button type="submit" form="add-module" className="cursor-pointer">
+          <Button
+            type="submit"
+            form="edit-module"
+            className="cursor-pointer"
+            disabled={updateModule.isPending}
+          >
             Actualizar
           </Button>
         </div>
