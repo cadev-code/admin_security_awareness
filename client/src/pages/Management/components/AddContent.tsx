@@ -14,7 +14,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { useCreateVideo } from '@/hooks';
+import { useAddContent } from '@/hooks';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod';
 
@@ -59,7 +59,7 @@ export const AddContent = ({
 
   const today = new Date();
 
-  const createVideo = useCreateVideo(closeForm);
+  const addContent = useAddContent(idModule, type, closeForm);
 
   const form = useForm({
     defaultValues: {
@@ -73,7 +73,7 @@ export const AddContent = ({
       onSubmit: formSchema,
     },
     onSubmit: (values) => {
-      createVideo.mutate({ idModule, ...values.value });
+      addContent.mutate({ idModule, ...values.value });
     },
   });
 
