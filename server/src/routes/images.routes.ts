@@ -3,9 +3,10 @@ import {
   authMiddleware,
   uploadMiddleware,
   validateInput,
+  validateQuery,
 } from '../middlewares';
-import { createImage } from '../controllers';
-import { imageSchema } from '../schemas';
+import { createImage, getImagesByModule } from '../controllers';
+import { imageQuerySchema, imageSchema } from '../schemas';
 
 const router = Router();
 
@@ -24,6 +25,13 @@ router.post(
   }) as RequestHandler,
   validateInput(imageSchema),
   createImage,
+);
+
+router.get(
+  '/images',
+  authMiddleware,
+  validateQuery(imageQuerySchema),
+  getImagesByModule,
 );
 
 export default router;

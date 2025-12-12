@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ImageBody } from '../schemas';
+import { ImageBody, ImageQuery } from '../schemas';
 import prisma from '../prisma_client';
 import { logger, removeUploadedFiles } from '../helpers';
 import { AppError } from '../utils';
@@ -100,6 +100,24 @@ export const createImage = async (
     res
       .status(201)
       .json({ error: null, message: 'Imagen creada exitosamente' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getImagesByModule = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { idModule } = req.query as unknown as ImageQuery;
+
+    const images = await prisma.image.findMany({
+      where: { idModule: Number(idModule) },
+    });
+
+    res.status(200).json({ error: null, data: images });
   } catch (error) {
     next(error);
   }
