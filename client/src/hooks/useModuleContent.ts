@@ -8,7 +8,7 @@ export const useModuleContent = (type: string, idModule: string) => {
     ContentsResponse,
     AxiosError & { response: { data: { error: string; message: string } } }
   >({
-    queryKey: ['module-content', idModule],
+    queryKey: ['module-content', Number(idModule)],
     queryFn: () => {
       const endpoint =
         type === 'VIDEO' ? '/videos' : type === 'AUDIO' ? '/audios' : '/images';
