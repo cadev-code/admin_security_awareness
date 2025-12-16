@@ -1,3 +1,4 @@
+export * from './audios.controllers';
 export * from './auth.controllers';
 export * from './images.controllers';
 export * from './modules.controllers';
