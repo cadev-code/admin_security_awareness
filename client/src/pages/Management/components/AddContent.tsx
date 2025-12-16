@@ -29,7 +29,7 @@ export const AddContent = ({
 }) => {
   const allowedFileTypes = {
     VIDEO: ['video/mp4', 'video/webm'],
-    AUDIO: ['audio/mp3', 'audio/wav'],
+    AUDIO: ['audio/mpeg', 'audio/wav', 'audio/ogg'],
     IMAGE: ['image/jpeg', 'image/png', 'image/webp'],
   };
 
