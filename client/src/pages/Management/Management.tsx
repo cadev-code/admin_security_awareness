@@ -26,6 +26,11 @@ export const Management = () => {
     module: null,
   });
 
+  const [showDeleteModule, setShowDeleteModule] = useState<ModuleDialogState>({
+    show: false,
+    module: null,
+  });
+
   const [showModule, setShowModule] = useState<ModuleDialogState>({
     show: false,
     module: null,
@@ -99,7 +104,20 @@ export const Management = () => {
                             })
                           }
                         >
-                          Editar Módulo
+                          Editar
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="cursor-pointer text-red-600 hover:text-red-500"
+                          onClick={() =>
+                            setShowDeleteModule({
+                              show: true,
+                              module,
+                            })
+                          }
+                        >
+                          Eliminar
                         </Button>
                       </div>
                     </div>
