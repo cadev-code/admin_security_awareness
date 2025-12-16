@@ -1,3 +1,4 @@
+export * from './audio.schema';
 export * from './auth.schema';
 export * from './image.schema';
 export * from './module.schema';
